@@ -35,6 +35,9 @@ jobs:
           TOKEN: ${{ secrets.AUTH_TOKEN }}
         run: |
           curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/357175299/zip
+
+      - name: ls
+        run: ls *
       - name: unzip
         run: unzip zip
       - name: ls
