@@ -31,7 +31,4 @@ jobs:
     steps:
       - name: Download
         run: |
-          curl \
-            -H "Accept: application/vnd.github+json" \ 
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/357175299
+          curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/357175299
