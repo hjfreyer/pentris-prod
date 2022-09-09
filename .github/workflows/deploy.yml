@@ -4,7 +4,7 @@
 # documentation.
 
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll site to Pages
+name: Deploy Pentris Build to Prod
 
 on:
   # Runs on pushes targeting the default branch
@@ -26,7 +26,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  grab:
+  # Copy a build from the dev project
+  copy:
     runs-on: ubuntu-latest
     environment: public-data
     steps:
@@ -43,20 +44,14 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: 'build/'
-  ## Deployment job
-  #deploy:
-  #  environment:
-  #    name: github-pages
-  #    url: ${{ steps.deployment.outputs.page_url }}
-  #  runs-on: ubuntu-latest
-  #  needs: build
-  #  steps:
-  #    - name: Deploy to GitHub Pages
-  #      id: deployment
-  #      uses: actions/deploy-pages@v1
-  #    - name: ls
-  #      run: ls
-  #    - name: unzip
-  #      run: unzip zip
-  #    - name: ls
-  #      run: ls
+  # Deployment job
+  deploy:
+   environment:
+     name: github-pages
+     url: ${{ steps.deployment.outputs.page_url }}
+   runs-on: ubuntu-latest
+   needs: build
+   steps:
+     - name: Deploy to GitHub Pages
+       id: deployment
+       uses: actions/deploy-pages@v1
