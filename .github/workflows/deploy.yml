@@ -31,11 +31,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: public-data
     steps:
+      - uses: actions/checkout@v3
       - name: Download
         env:
           TOKEN: ${{ secrets.AUTH_TOKEN }}
         run: |
-          wget --header "Accept: application/vnd.github+json" --header "Authorization: Bearer $TOKEN" https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/357175299/zip
+          wget --header "Accept: application/vnd.github+json" --header "Authorization: Bearer $TOKEN" https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/$(cat build_artifact_id.txt)/zip
       - name: mkdir
         run: mkdir build
       - name: extract
