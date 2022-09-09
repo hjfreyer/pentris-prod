@@ -34,11 +34,29 @@ jobs:
         env:
           TOKEN: ${{ secrets.AUTH_TOKEN }}
         run: |
-          wget -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $TOKEN" https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/357175299/zip
-
-      - name: ls
-        run: ls
-      - name: unzip
-        run: unzip zip
-      - name: ls
-        run: ls
+          wget --header "Accept: application/vnd.github+json" --header "Authorization: Bearer $TOKEN" https://api.github.com/repos/hjfreyer/pentris/actions/artifacts/357175299/zip
+      - name: mkdir
+        run: mkdir build
+      - name: extract
+        run: tar zxvf zip -C build/        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1#
+        with:
+          path: 'build/'
+  ## Deployment job
+  #deploy:
+  #  environment:
+  #    name: github-pages
+  #    url: ${{ steps.deployment.outputs.page_url }}
+  #  runs-on: ubuntu-latest
+  #  needs: build
+  #  steps:
+  #    - name: Deploy to GitHub Pages
+  #      id: deployment
+  #      uses: actions/deploy-pages@v1
+  #    - name: ls
+  #      run: ls
+  #    - name: unzip
+  #      run: unzip zip
+  #    - name: ls
+  #      run: ls
