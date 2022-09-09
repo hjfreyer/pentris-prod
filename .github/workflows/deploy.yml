@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   # Copy a build from the dev project
-  copy:
+  fetch:
     runs-on: ubuntu-latest
     environment: public-data
     steps:
@@ -50,7 +50,7 @@ jobs:
      name: github-pages
      url: ${{ steps.deployment.outputs.page_url }}
    runs-on: ubuntu-latest
-   needs: build
+   needs: fetch
    steps:
      - name: Deploy to GitHub Pages
        id: deployment
